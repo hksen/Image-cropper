@@ -1,0 +1,31 @@
+<div class="crop-image-container">
+    <div class="crop-image-content">
+
+        <div class="fileDisplay-container">
+            <div id="fileDisplay" onmouseenter="mouseMove_on(event)" onmouseleave="mouseMove_off(event)" onmousedown="mouseDown_on(event)" onmouseup="mouseDown_off(event)">
+                <img id="img" class="img" src="">
+                <div id="cropper"></div>
+            </div>
+
+            <div class="input-range">
+                <input id="range" type="range" min="10" max="40">
+            </div>
+
+            <div class="output-container">
+                <div id="output"></div>
+            </div>
+        </div>
+
+
+        <div class="buttons-container">
+            <div class="reset-button">
+                <button type="button" class="reset">Reset</button>
+                <input id="fileReset" type="file" onchange="imageUploaded(this)">
+            </div>
+            <button class="send" onclick="crop(event)">Crop</button>
+        </div>
+
+    </div>
+</div>
+
+

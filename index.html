@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <link href="style.css" rel="stylesheet">
+    <title>Cropper</title>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="main-content">
+
+            <div class="upload-button">
+                <button class="upload">Upload</button>
+                <input id="fileInput" type="file" onchange="imageUploaded(this)">
+            </div>
+
+            <div class="cropper-container"></div>
+
+            <div class="error-handling"></div>
+
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+</body>
+</html>
