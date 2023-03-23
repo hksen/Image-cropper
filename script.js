@@ -16,19 +16,15 @@ let initImageY = 0;
 let ratio = 1;
 const margin = 50; 
 
-const buttonUpload = document.querySelector('.upload-button');
-
 // function to handle the image upload event
 function imageUploaded(element){
 
+    // clear any previously loaded image
     document.querySelector('.cropper-container').innerHTML = ''; 
-    
-    buttonUpload.style.display = "none"; 
 
     // verifiy if the file type is correct
     if (element.files[0].type === 'image/png' || element.files[0].type === 'image/jpeg') {
 
-        // create a new FormData object to send the uploaded file to the server
         var file = element.files[0];
         var formData = new FormData();
 
@@ -43,6 +39,7 @@ function imageUploaded(element){
             contentType: false,
             success: function(response) {
 
+            // display the cropper container with the loaded image and remove unnecessary blocks
             $('.error-handling-container').remove(); 
             $('.cropper-container').html(response);
             $('.upload-button').remove();
@@ -58,18 +55,17 @@ function imageUploaded(element){
                 containerImg = document.getElementById('fileDisplay');
                 cropper = document.getElementById('cropper');
                 range = document.getElementById('range'); 
-
                 cropContainer = document.querySelector('.crop-image-container'); 
 
-                cropper.style.top = containerImg.offsetTop;
+                cropper.style.top = containerImg.offsetTop; 
 
                 image.onload = function(){
 
-                    reset_image(); 
+                    reset_image(); // adapt the height/width of the image for the cropper
                     var originalImageWidth = image.clientWidth; 
                     var originalImageHeight = image.clientHeight; 
 
-                    // when the mouse is moved, check if the mouseMove and mouseDown variables are true and move the image accordingly
+                    // when the mouse is moved, check if the mouseMove and mouseDown variables are true and move the image 
                     window.onmousemove = function(event){
 
                         if(mouseMove && mouseDown){
@@ -128,8 +124,8 @@ function imageUploaded(element){
                         }
                     }
 
+                    // make the zoom effect 
                     range.value = 10; 
-
                     range.addEventListener('mousemove', function() {
 
                         var w = image.clientWidth;
@@ -177,15 +173,11 @@ function imageUploaded(element){
         $.ajax({
             url: 'error.html',
             type: 'GET',
-            data: {
-
-            },
+            data: {},
             success: function(response) {
                 $('.error-handling').html(response);
             }});
     }
-
-
 
 };
 
@@ -229,6 +221,7 @@ function crop() {
             ratio = img.naturalWidth / containerImg.clientWidth;
         }
 
+        // Calculate the x and y coordinates 
         var x1 = image.style.left; 
         x1 = x1.replace("px", ""); 
         if (x1 < 0) { x1 = x1 * -1 };
@@ -246,20 +239,25 @@ function crop() {
         x1 *= ratio; 
         y1 *= ratio; 
 
+        // Take in count the zoom effect
         var zoomFactor = (range.value / 10); 
         x1 = x1 / zoomFactor; 
         y1 = y1 / zoomFactor; 
         width = width / zoomFactor; 
         height = height / zoomFactor; 
 
+        // Create a canvas element and draw the cropped image 
         var canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, x1, y1, width, height, 0, 0, width, height);
 
+        // Create a new image object and set its source to the data URL of the canvas
         var croppedImg = new Image();
         croppedImg.src = canvas.toDataURL();
+
+        //add the cropped image into the output element
         var outputDiv = document.getElementById("output");
         outputDiv.innerHTML = ''; 
         outputDiv.appendChild(croppedImg);
